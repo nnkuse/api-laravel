@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListOfDateTable extends Migration
+class CreateListOfDatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateListOfDateTable extends Migration
      */
     public function up()
     {
-        Schema::create('list_of_date', function (Blueprint $table) {
+        Schema::create('list_of_dates', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
@@ -35,6 +35,6 @@ class CreateListOfDateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_of_date');
+        Schema::dropIfExists('list_of_dates');
     }
 }

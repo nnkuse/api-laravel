@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateListItemTable extends Migration
+class CreateListDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,19 @@ class CreateListItemTable extends Migration
      */
     public function up()
     {
-        Schema::create('list_items', function (Blueprint $table) {
+        Schema::create('list_details', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
-            $table->increments('ListItemID');
+            $table->increments('ListDetailID');
+            $table->integer('ListOfDateID')->unsigned();
+            $table->foreign('ListOfDateID')
+                ->references('ListOfDateID')
+                ->on('list_of_date')
+                ->onDelete('cascade');
             $table->string('ListName', 100);
-            $table->date('StartDate');
-            $table->date('EndDate');
-            $table->string('Agency', 100);
-            $table->decimal('NetIncome', 8, 2);
+            $table->decimal('Income', 8, 2);
+            $table->decimal('Expense', 8, 2);
             $table->timestamps();
         });
     }
@@ -34,6 +37,6 @@ class CreateListItemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('list_items');
+        Schema::dropIfExists('list_details');
     }
 }

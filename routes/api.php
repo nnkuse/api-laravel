@@ -13,12 +13,26 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['prefix' => 'v1'], function() {
-    Route::post('auth/login', 'Api\AuthController@login');
-    Route::post('auth/refresh', 'Api\AuthController@refresh');
-    Route::get('auth/logout', 'Api\AuthController@logout');
-    Route::get('auth/me', 'Api\AuthController@me');
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\\'], function() {
+    Route::post('auth/login', 'AuthController@login');
+    Route::post('auth/refresh', 'AuthController@refresh');
+    Route::get('auth/logout', 'AuthController@logout');
+    Route::get('auth/me', 'AuthController@me');
+    // Route::Resource('listitems', 'ListItemsController');
+
 });
 // Route::group(['middleware' => 'jwt.auth', 'namespace' => 'Api\\'], function () {
 
 // });
+Route::group(['prefix' => 'v1'], function() {
+    Route::apiResource('listitems', 'ListItemsController');
+    Route::group(['prefix' => 'listitems', 'namespace' => 'Api\\'], function() {
+        Route::apiResource('{listitem}/listofdate', 'ListOfDateController');
+        Route::group(['prefix' => 'listofdate'], function () {
+            Route::apiResource('{listofdata}/listdetail', 'ListDetailsController');
+        });
+    });
+});
+
+
+

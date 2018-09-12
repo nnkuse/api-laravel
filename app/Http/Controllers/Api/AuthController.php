@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Api;
 
+use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
