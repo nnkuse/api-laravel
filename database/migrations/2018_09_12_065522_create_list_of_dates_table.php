@@ -18,7 +18,7 @@ class CreateListOfDatesTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('ListOfDateID');
-            $table->integer('ListItemID')->unsigned();
+            $table->integer('ListItemID')->unsigned()->index();
             $table->foreign('ListItemID')
                 ->references('ListItemID')
                 ->on('list_items')

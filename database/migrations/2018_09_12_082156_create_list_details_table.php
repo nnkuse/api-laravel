@@ -18,10 +18,10 @@ class CreateListDetailsTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
             $table->increments('ListDetailID');
-            $table->integer('ListOfDateID')->unsigned();
+            $table->integer('ListOfDateID')->unsigned()->index();
             $table->foreign('ListOfDateID')
                 ->references('ListOfDateID')
-                ->on('list_of_date')
+                ->on('list_of_dates')
                 ->onDelete('cascade');
             $table->string('ListName', 100);
             $table->decimal('Income', 8, 2);

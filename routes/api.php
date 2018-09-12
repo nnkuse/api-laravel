@@ -28,8 +28,8 @@ Route::group(['prefix' => 'v1'], function() {
     Route::apiResource('listitems', 'ListItemsController');
     Route::group(['prefix' => 'listitems', 'namespace' => 'Api\\'], function() {
         Route::apiResource('{listitem}/listofdate', 'ListOfDateController');
-        Route::group(['prefix' => 'listofdate'], function () {
-            Route::apiResource('{listofdata}/listdetail', 'ListDetailsController');
+        Route::group(['prefix' => '{listitem}/listofdate'], function () {
+            Route::apiResource('{listofdata}/listdetails', 'ListDetailsController');
         });
     });
 });
