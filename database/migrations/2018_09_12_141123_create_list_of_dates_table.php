@@ -14,9 +14,6 @@ class CreateListOfDatesTable extends Migration
     public function up()
     {
         Schema::create('list_of_dates', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
             $table->increments('ListOfDateID');
             $table->integer('ListItemID')->unsigned()->index();
             $table->foreign('ListItemID')

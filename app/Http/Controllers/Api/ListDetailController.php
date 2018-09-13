@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Model\ListDetails;
+use App\Model\ListDetail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ListDetailsController extends Controller
+class ListDetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,10 +42,10 @@ class ListDetailsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\ListDetails  $listDetails
+     * @param  \App\Model\ListDetail  $listDetail
      * @return \Illuminate\Http\Response
      */
-    public function show(ListDetails $listDetails)
+    public function show(ListDetail $listDetail)
     {
         //
     }
@@ -53,10 +53,10 @@ class ListDetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\ListDetails  $listDetails
+     * @param  \App\Model\ListDetail  $listDetail
      * @return \Illuminate\Http\Response
      */
-    public function edit(ListDetails $listDetails)
+    public function edit(ListDetail $listDetail)
     {
         //
     }
@@ -65,10 +65,10 @@ class ListDetailsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\ListDetails  $listDetails
+     * @param  \App\Model\ListDetail  $listDetail
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListDetails $listDetails)
+    public function update(Request $request, ListDetail $listDetail)
     {
         //
     }
@@ -76,10 +76,10 @@ class ListDetailsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\ListDetails  $listDetails
+     * @param  \App\Model\ListDetail  $listDetail
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListDetails $listDetails)
+    public function destroy(ListDetail $listDetail)
     {
         //
     }

@@ -1,12 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Model\ListItems;
+use App\Model\ListItem;
 use Illuminate\Http\Request;
-use App\Http\Controllers;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ListItem\ListItemResource;
+use App\Http\Resources\ListItem\ListItemCollection;
 
-class ListItemsController extends Controller
+class ListItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +17,8 @@ class ListItemsController extends Controller
      */
     public function index()
     {
-        //
+        // return ListItem::paginate(20);
+        return ListItemCollection::collection(ListItem::paginate(20));
     }
 
     /**
@@ -42,21 +45,21 @@ class ListItemsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Model\ListItems  $listItems
+     * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function show(ListItems $listItems)
+    public function show(ListItem $listItem, $id)
     {
-        //
+        return new ListItemResource($listItem::find($id));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Model\ListItems  $listItems
+     * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(ListItems $listItems)
+    public function edit(ListItem $listItem)
     {
         //
     }
@@ -65,10 +68,10 @@ class ListItemsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\ListItems  $listItems
+     * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListItems $listItems)
+    public function update(Request $request, ListItem $listItem)
     {
         //
     }
@@ -76,10 +79,10 @@ class ListItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Model\ListItems  $listItems
+     * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListItems $listItems)
+    public function destroy(ListItem $listItem)
     {
         //
     }

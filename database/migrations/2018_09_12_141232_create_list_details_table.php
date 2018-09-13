@@ -14,9 +14,6 @@ class CreateListDetailsTable extends Migration
     public function up()
     {
         Schema::create('list_details', function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            $table->charset = 'utf8';
-            $table->collation = 'utf8_unicode_ci';
             $table->increments('ListDetailID');
             $table->integer('ListOfDateID')->unsigned()->index();
             $table->foreign('ListOfDateID')
