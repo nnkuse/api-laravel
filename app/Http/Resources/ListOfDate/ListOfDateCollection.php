@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Resources\ListItem;
+namespace App\Http\Resources\ListOfDate;
 
 use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ListItemCollection extends Resource
+class ListOfDateCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -17,11 +18,9 @@ class ListItemCollection extends Resource
         return [
             'list_name' => $this->list_name,
             'agency' => $this->agency,
-            'start_date' => $this->start_date,
-            'end_date' => $this->end_date,
-            'net_income' => $this->net_income,
+            'in_date' => $this->in_date,
             'href' => [
-                'link' => route('listitems.show', $this->id)
+                'link' => route('listofdates.show', [$this->list_item_id, $this->id])
             ]
         ];
     }

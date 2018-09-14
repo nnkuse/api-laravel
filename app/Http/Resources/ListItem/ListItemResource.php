@@ -21,7 +21,7 @@ class ListItemResource extends Resource
           'end_date' => $this->end_date,
           'net_income' => $this->net_income,
           'href' => [
-              'list_of_date' => route('listofdates.index', $this->id)
+              'link' => route('listofdates.index', $this->id)
           ]
         ];
     }

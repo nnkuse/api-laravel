@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Model\ListItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ListItem\ListItemResource;
 use App\Http\Resources\ListItem\ListItemCollection;
@@ -17,8 +18,10 @@ class ListItemController extends Controller
      */
     public function index()
     {
+        $listItem = DB::table('list_items')
+                    ->paginate(20);
         // return ListItem::paginate(20);
-        return ListItemCollection::collection(ListItem::paginate(20));
+        return ListItemCollection::collection($listItem);
     }
 
     /**
@@ -48,9 +51,12 @@ class ListItemController extends Controller
      * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function show(ListItem $listItem, $id)
+    public function show($listItemID)
     {
-        return new ListItemResource($listItem::find($id));
+        $listItemOne = DB::table('list_items')
+                        ->where('list_items.id', '=', $listItemID)
+                        ->paginate(20);
+        return ListItemResource::collection($listItemOne);
     }
 
     /**
