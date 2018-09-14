@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Model\ListOfDate;
 use Illuminate\Database\Eloquent\Model;
 
 class ListItem extends Model
