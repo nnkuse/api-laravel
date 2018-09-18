@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class users extends Authenticatable
 {
     protected $connection = 'mysql2';
     use Notifiable;
@@ -17,12 +17,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'user_name', 'password',
+        'name', 'email', 'password',
     ];
-
-    // protected $fillable = [
-    //     'name', 'email', 'password',
-    // ];
 
     /**
      * The attributes that should be hidden for arrays.
