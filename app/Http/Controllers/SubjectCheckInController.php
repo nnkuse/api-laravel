@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\subject_check_in;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\Subjects\SubjectsResource;
 use App\Http\Resources\SubjectChecks\SubjectsCheckCollection;
 
 class SubjectCheckInController extends Controller
@@ -20,7 +22,7 @@ class SubjectCheckInController extends Controller
             ->join('subjects', 'subject_checks.subject_id', '=', 'subjects.id')
             ->where('subjects.id', '=', $subjectID)
             ->select('subject_checks.*', 'subjects.subject_name')
-            ->paginate(20);
+            ->get();
         // return $subjectCheck;
         return SubjectsCheckCollection::collection($subjectCheck);
     }
@@ -43,19 +45,15 @@ class SubjectCheckInController extends Controller
      */
     public function store(Request $request, $subjectID)
     {
-        $credentials = $request->only('in_date', 'start_time', 'end_time');
-        $token = $this->getToken(5);
+        $credentials = $request->only('in_date');
+        // $token = $this->getToken(5);
         $insert = DB::connection('mysql2')->table('subject_checks')
             ->insert([
                 'in_date' => $credentials['in_date'],
-                'start_time' => $credentials['start_time'],
-                'end_time' => $credentials['end_time'],
-                'token' => $token,
                 'subject_id' => $subjectID,
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
-        $credentials['token'] = $token;
         if ($insert) {
             return response()->json(['data' => $credentials]);
         }
@@ -70,12 +68,16 @@ class SubjectCheckInController extends Controller
      */
     public function show($subjectID, $subjectCheckID)
     {
-        // $listOne = DB::connection('mysql2')->table('subjects')
-        //     ->join('users', 'subjects.own_id', '=', 'users.id')
-        //     ->where('subjects.id', '=', $subjectID)
-        //     ->select('subjects.id', 'subjects.subject_name', 'users.user_name')
-        //     ->get();
-        // // return $listOne;
+        $listOne = DB::connection('mysql2')->table('subject_checks')
+            ->join('subjects', 'subjects.id', '=', 'subject_checks.subject_id')
+            ->join('users', 'users.id', '=', 'subjects.own_id')
+            ->where('subject_checks.id', '=', $subjectCheckID)
+            ->select('subject_checks.id', 
+                'subjects.subject_name', 
+                'users.user_name',
+                'subject_checks.in_date')
+            ->get();
+        return response(['data' => $listOne], Response::HTTP_OK);
         // return SubjectsResource::collection($listOne);
     }
 
@@ -97,9 +99,13 @@ class SubjectCheckInController extends Controller
      * @param  \App\subject_check_in  $subject_check_in
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, subject_check_in $subject_check_in)
+    public function update(Request $request, subject_check_in $subject_check_in, $id1, $id2)
     {
-        //
+        $token = $request->token;
+        $active = $request->active;
+        $listOfDateOne = DB::connection('mysql2')->table('subject_checks')
+            ->where('id', '=', $id2)->update(['token' => $token, 'active' => $active]);
+        return response(['data' => 'update complete'], Response::HTTP_OK);
     }
 
     /**
@@ -108,9 +114,11 @@ class SubjectCheckInController extends Controller
      * @param  \App\subject_check_in  $subject_check_in
      * @return \Illuminate\Http\Response
      */
-    public function destroy(subject_check_in $subject_check_in)
+    public function destroy(subject_check_in $subject_check_in, $id1, $id2)
     {
-        //
+        $listOfDateOne = DB::connection('mysql2')->table('subject_checks')
+            ->where('id', '=', $id2)->delete();
+        return response(['data' => 'delete complete'], Response::HTTP_OK);
     }
 
     function crypto_rand_secure($min, $max)

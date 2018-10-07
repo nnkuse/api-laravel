@@ -18,9 +18,6 @@ class SubjectsCheckCollection extends Resource
             'id' => $this->id,
             'subject_name'  => $this->subject_name,
             'in_date' => $this->in_date,
-            'start_time'  => $this->start_time,
-            'end_time' => $this->end_time,
-            'token' => $this->token,
             'href'  => [
                 'link' => route('studentcheck.index', [$this->subject_id, $this->id])
             ]

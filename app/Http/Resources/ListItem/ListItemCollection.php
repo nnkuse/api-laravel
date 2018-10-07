@@ -15,6 +15,7 @@ class ListItemCollection extends Resource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'list_name' => $this->list_name,
             'agency' => $this->agency,
             'start_date' => $this->start_date,

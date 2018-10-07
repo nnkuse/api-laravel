@@ -18,6 +18,7 @@ class SubjectsResource extends JsonResource
             'id' => $this->id,
             'subject_name' => $this->subject_name,
             'own' => $this->user_name,
+            'in_date' -> $this->in_date,
             'href' => [
                 'link' => route('checksin.index', $this->id)
             ]

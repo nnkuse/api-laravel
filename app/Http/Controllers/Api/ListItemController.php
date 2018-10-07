@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Model\ListItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ListItem\ListItemResource;
 use App\Http\Resources\ListItem\ListItemCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListItemController extends Controller
 {
@@ -18,8 +20,8 @@ class ListItemController extends Controller
      */
     public function index()
     {
-        $listItem = DB::table('list_items')
-                    ->paginate(20);
+        $listItem = DB::table('list_items')->orderBy('id', 'desc')
+                    ->get();
         // return ListItem::paginate(20);
         return ListItemCollection::collection($listItem);
     }
@@ -42,7 +44,20 @@ class ListItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $credentials = $request->only('list_name', 'agency', 'start_date', 'end_date');
+        $insert = DB::table('list_items')
+            ->insert([
+                'list_name' => $credentials['list_name'],
+                'agency' => $credentials['agency'],
+                'start_date' => $credentials['start_date'],
+                'end_date' => $credentials['end_date'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at'  => Carbon::now()->toDateTimeString()
+            ]);
+        if ($insert) {
+            return response()->json(['data' => $credentials]);
+        }
+        return response()->json(['error' => 'create error']);
     }
 
     /**
@@ -55,8 +70,12 @@ class ListItemController extends Controller
     {
         $listItemOne = DB::table('list_items')
                         ->where('list_items.id', '=', $listItemID)
-                        ->paginate(20);
-        return ListItemResource::collection($listItemOne);
+                        ->get();
+        if ($listItemOne->count() > 0){
+            return ListItemResource::collection($listItemOne);
+        } else {
+            return response(null, Response::HTTP_NO_CONTENT);
+        }
     }
 
     /**

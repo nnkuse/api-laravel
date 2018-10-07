@@ -22,7 +22,7 @@ class SubjectsController extends Controller
         $subject = DB::connection('mysql2')->table('subjects')
                     ->join('users', 'subjects.own_id', '=', 'users.id')
                     ->select('subjects.id','subjects.subject_name', 'users.user_name')
-                    ->paginate(20);
+                    ->get();
         return SubjectsCollection::collection($subject);
     }
 

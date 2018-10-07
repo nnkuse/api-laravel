@@ -32,16 +32,16 @@ Route::group(['middleware' => 'jwt.auth', 'namespace' => 'Api'], function () {
 });
 
 // Classroom
-Route::post('/login', 'AuthController@login');
-Route::post('/refresh', 'AuthController@refresh');
-Route::get('/logout', 'AuthController@logout');
-Route::apiResource('/subjects', 'SubjectsController');
-Route::group(['prefix' => 'subjects'], function () {
-    Route::apiResource('/{subject}/checksin', 'SubjectCheckInController');
-    Route::group(['prefix' => '/{subject}/checksin'], function () {
-        Route::apiResource('/{checkin}/studentcheck', 'CheckInController');
-    });
-});
-Route::group(['middleware' => 'jwt.auth'], function () {
-    Route::get('/me', 'AuthController@me');
-});
+// Route::post('/login', 'AuthController@login');
+// Route::post('/refresh', 'AuthController@refresh');
+// Route::get('/logout', 'AuthController@logout');
+// Route::apiResource('/subjects', 'SubjectsController');
+// Route::group(['prefix' => 'subjects'], function () {
+//     Route::apiResource('/{subject}/checksin', 'SubjectCheckInController');
+//     Route::group(['prefix' => '/{subject}/checksin'], function () {
+//         Route::apiResource('/{checkin}/studentcheck', 'CheckInController');
+//     });
+// });
+// Route::group(['middleware' => 'jwt.auth'], function () {
+//     Route::get('/me', 'AuthController@me');
+// });

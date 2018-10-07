@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Model\ListItem;
 use App\Model\ListOfDate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\ListOfDate\ListOfDateResource;
 use App\Http\Resources\ListOfDate\ListOfDateCollection;
 
@@ -23,7 +25,7 @@ class ListOfDateController extends Controller
                     ->join('list_items', 'list_of_dates.list_item_id', '=', 'list_items.id')
                     ->where('list_items.id', '=', $listItemID)
                     ->select('list_of_dates.*', 'list_items.list_name', 'list_items.agency')
-                    ->paginate(20);
+                    ->get();
         // return response()->json($listItem);
         return ListOfDateCollection::collection($listItem);
     }
@@ -46,7 +48,18 @@ class ListOfDateController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $credentials = $request->only('list_item_id', 'in_date');
+        $insert = DB::table('list_of_dates')
+            ->insert([
+                'list_item_id' => $credentials['list_item_id'],
+                'in_date' => $credentials['in_date'],
+                'created_at' => Carbon::now()->toDateTimeString(),
+                'updated_at' => Carbon::now()->toDateTimeString()
+            ]);
+        if ($insert) {
+            return response()->json(['data' => $credentials]);
+        }
+        return response()->json(['error' => 'create error']);
     }
 
     /**
@@ -85,9 +98,13 @@ class ListOfDateController extends Controller
      * @param  \App\Model\ListOfDate  $listOfDate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListOfDate $listOfDate)
+    public function update(Request $request, $listItemID, $listOfDateID)
     {
-        //
+        $credentials = $request->input('in_date');
+        $listOfDateOne = DB::table('list_of_dates')
+            ->where ('id', $listOfDateID)
+            ->update(['in_date' => $credentials, 'updated_at' => Carbon::now()->toDateTimeString()]);
+        return response(['data' => 'update complete'], Response::HTTP_OK);
     }
 
     /**
@@ -96,8 +113,10 @@ class ListOfDateController extends Controller
      * @param  \App\Model\ListOfDate  $listOfDate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListOfDate $listOfDate)
+    public function destroy(ListOfDate $listOfDate, $listItemID, $listOfDateID)
     {
-        //
+        $listOfDateOne = DB::table('list_of_dates')
+            ->where('id', '=', $listOfDateID)->delete();
+        return response(['data' => 'delete complete'], Response::HTTP_OK);
     }
 }

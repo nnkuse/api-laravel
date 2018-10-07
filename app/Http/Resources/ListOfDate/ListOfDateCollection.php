@@ -16,6 +16,7 @@ class ListOfDateCollection extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'list_name' => $this->list_name,
             'agency' => $this->agency,
             'in_date' => $this->in_date,
