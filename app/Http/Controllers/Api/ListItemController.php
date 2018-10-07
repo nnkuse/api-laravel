@@ -96,9 +96,18 @@ class ListItemController extends Controller
      * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ListItem $listItem)
+    public function update(Request $request, $listItemID)
     {
-        //
+        $credentials = array(
+            'list_name' => $request->list_name,
+            'agency' => $request->agency, 'start_date' => $request->start_date,
+            'end_date' => $request->end_date,
+            'updated_at' => Carbon::now()->toDateTimeString()
+        );
+        $listOfDateOne = DB::table('list_items')
+            ->where ('id', $listItemID)
+            ->update($credentials);
+        return response(['data' => 'update complete'], Response::HTTP_OK);
     }
 
     /**
@@ -107,8 +116,10 @@ class ListItemController extends Controller
      * @param  \App\Model\ListItem  $listItem
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ListItem $listItem)
+    public function destroy(ListItem $listItem, $listItemID)
     {
-        //
+        $listOfDateOne = DB::table('list_items')
+            ->where('id', '=', $listItemID)->delete();
+        return response(['data' => 'delete complete'], Response::HTTP_OK);
     }
 }

@@ -100,7 +100,7 @@ class ListOfDateController extends Controller
      */
     public function update(Request $request, $listItemID, $listOfDateID)
     {
-        $credentials = $request->input('in_date');
+        $credentials = $request->in_date;
         $listOfDateOne = DB::table('list_of_dates')
             ->where ('id', $listOfDateID)
             ->update(['in_date' => $credentials, 'updated_at' => Carbon::now()->toDateTimeString()]);
