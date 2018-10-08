@@ -17,6 +17,7 @@ class ListOfDateCollection extends JsonResource
     {
         return [
             'id' => $this->id,
+            'list_item_id' => $this->list_item_id,
             'list_name' => $this->list_name,
             'agency' => $this->agency,
             'in_date' => $this->in_date,

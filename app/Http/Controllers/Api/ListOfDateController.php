@@ -75,7 +75,7 @@ class ListOfDateController extends Controller
             ->where('list_items.id', '=', $listItemID)
             ->where('list_of_dates.id', '=', $listOfDateID)
             ->select('list_of_dates.*', 'list_items.list_name', 'list_items.agency')
-            ->paginate(20);
+            ->get();
         // return response()->json($listOfDateOne);
         return ListOfDateResource::collection($listOfDateOne);
     }

@@ -23,7 +23,7 @@ class ListDetailController extends Controller
                         ->join('list_items', 'list_of_dates.list_item_id', '=', 'list_items.id')
                         ->where('list_items.id', '=', $listItemID)
                         ->where('list_of_dates.id', '=', $listOfDateID)
-                        ->paginate(20);
+                        ->get();
         return ListDetailResource::collection($listDetail);
     }
 
