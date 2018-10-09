@@ -46,20 +46,20 @@ class ListOfDateController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $listItemID)
     {
-        $credentials = $request->only('list_item_id', 'in_date');
+        $credentials = $request->only('in_date');
         $insert = DB::table('list_of_dates')
             ->insert([
-                'list_item_id' => $credentials['list_item_id'],
+                'list_item_id' => $listItemID,
                 'in_date' => $credentials['in_date'],
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString()
             ]);
         if ($insert) {
-            return response()->json(['data' => $credentials]);
+            return response()->json(['data' => $credentials], Response::HTTP_OK);
         }
-        return response()->json(['error' => 'create error']);
+        return response()->json(['error' => 'create error'], Response::HTTP_BAD_REQUEST);
     }
 
     /**
